@@ -6,6 +6,7 @@ class my_theme{
   static ThemeData light_theme=ThemeData(
     primaryColor: primaryColor_light,
     textTheme: TextTheme(
+      titleMedium: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),
       titleLarge: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)
     ),
     scaffoldBackgroundColor: Colors.transparent,
@@ -13,9 +14,13 @@ class my_theme{
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+        iconTheme: IconThemeData(
+          color:blackColor,
+        )
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: blackColor
-    )
+    ),
+
   );
 }
