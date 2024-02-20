@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami/my_theme.dart';
+import 'hadeeth_tab.dart';
 
-class sura_details extends StatefulWidget {
-  static const String routeName = 'sura_details';
+class hadeth_details extends StatefulWidget {
+  static const String routeName = 'hadeth_details';
   @override
-  State<sura_details> createState() => _sura_detailsState();
+  State<hadeth_details> createState() => _hadeth_detailsState();
 }
 
-class _sura_detailsState extends State<sura_details> {
-  List<String> content = [];
+class _hadeth_detailsState extends State<hadeth_details> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)?.settings.arguments as suraArgs;
-   if(content.isEmpty){
-     readFile(args.index);
-   }
+    var args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments as Hadeth_data;
+
 
     return Stack(
       children: [
@@ -31,19 +32,23 @@ class _sura_detailsState extends State<sura_details> {
           appBar: AppBar(
             title: Text(
               'Islami', // Display the sura name in the AppBar title
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleLarge,
             ),
           ),
-          body:content.isEmpty ?
-              Center(child: CircularProgressIndicator(
-                color: my_theme.primaryColor_light,
-              ))
-          :
-          Container(
+          body: Container(
             padding: EdgeInsets.all(25),
             margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.width * 0.10,
-              horizontal: MediaQuery.of(context).size.height * 0.04,
+              vertical: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.10,
+              horizontal: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.04,
             ),
             decoration: BoxDecoration(
               color: Color.fromRGBO(255, 255, 255, .8),
@@ -51,25 +56,30 @@ class _sura_detailsState extends State<sura_details> {
             ),
             child: Column(
               children: [
-                Text(' سوره ${args.name}',
-                  style: Theme.of(context).textTheme.titleLarge,),
+                Text(args.title,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleLarge,),
                 Divider(
                   height: 1,
                   thickness: 1,
                   color: my_theme.primaryColor_light,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height*0.04,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.04,
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: content.length,
+                    itemCount: args.content.length,
                     itemBuilder: (context, index) {
-                      return Text(
-                        '${content[index]} ${{index+1}}',
+                      return Text(args.content[index],
                         textDirection: TextDirection.rtl,
                         style: TextStyle(fontSize: 18.0),
-                      );
+                        );
                     },
                   ),
                 ),
@@ -80,21 +90,4 @@ class _sura_detailsState extends State<sura_details> {
       ],
     );
   }
-
-  void readFile(int index) async {
-    String fileContent =
-    await rootBundle.loadString('assets/asset/${index + 1}.txt');
-    fileContent=fileContent.trim();
-     List <String> lines = fileContent.split('\n');
-    content = lines;
-
-   setState(() {
-   });
-  }
 }
-class suraArgs{
-  String name;
-  int index;
-  suraArgs({required this.name,required this.index});
-}
-
