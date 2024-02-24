@@ -13,7 +13,7 @@ class my_theme{
     appBarTheme: AppBarTheme(
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      elevation: 0,
+        elevation: 0,
         iconTheme: IconThemeData(
           color:blackColor,
         )
