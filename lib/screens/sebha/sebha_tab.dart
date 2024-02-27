@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:islami/my_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/app_provider.dart';
 
 class sebha_tab extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class _sebha_tabState extends State<sebha_tab> {
   ];
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<app_provider>(context);
     return Container(
       width: double.infinity,
       child: Column(
@@ -31,8 +35,10 @@ class _sebha_tabState extends State<sebha_tab> {
                     top: MediaQuery.of(context).size.height *0.075),
                 child:Transform.rotate(
                   angle:angle ,
-                    child: Image.asset('assets/images/body_sebha_logo.png')) ,
+                    child: provider.isDark()?Image.asset('assets/images/body_sebha_dark.png'):Image.asset('assets/images/body_sebha_logo.png')
+                ) ,
               ),
+              provider.isDark()? Image.asset('assets/images/head_sebha_dark.png'):
               Image.asset('assets/images/head_sebha_logo.png')
             ],
           ),
@@ -44,12 +50,12 @@ class _sebha_tabState extends State<sebha_tab> {
           SizedBox(height: MediaQuery.of(context).size.height *0.02,),
           Container(
             child: Text('$count',
-              style: TextStyle(fontSize: 25),
+              style: Theme.of(context).textTheme.titleSmall,
             ),
             padding: EdgeInsets.all(22),
             decoration:BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: my_theme.primaryColor_light.withOpacity(0.6)
+              color: provider.isDark()?my_theme.primaryColor_dark :my_theme.primaryColor_light.withOpacity(0.6)
             )
           ),
           SizedBox(height: MediaQuery.of(context).size.height *0.02,),
@@ -59,12 +65,15 @@ class _sebha_tabState extends State<sebha_tab> {
             },
             child: Container(
               child: Text('${sebha[index]}',
-                style: TextStyle(fontSize: 25,color: Colors.white),
+                style:Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: provider.isDark()? my_theme.primaryColor_dark :Colors.white,
+                  fontWeight: FontWeight.bold
+                )
               ),
               padding: EdgeInsets.all(12),
               decoration:BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: my_theme.primaryColor_light
+                color: provider.isDark()? my_theme.yellowColor : my_theme.primaryColor_light
               )
             ),
           ),

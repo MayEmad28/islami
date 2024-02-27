@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami/my_theme.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../provider/app_provider.dart';
 
 class sura_details extends StatefulWidget {
   static const String routeName = 'sura_details';
@@ -13,6 +16,7 @@ class _sura_detailsState extends State<sura_details> {
 
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<app_provider>(context);
     var args = ModalRoute.of(context)?.settings.arguments as suraArgs;
    if(content.isEmpty){
      readFile(args.index);
@@ -20,23 +24,21 @@ class _sura_detailsState extends State<sura_details> {
 
     return Stack(
       children: [
-        Image.asset(
-          'assets/images/default_bg.png',
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.fill,
-        ),
+        provider.isDark()?
+        Image.asset('assets/images/dark_bg.png',width: double.infinity,height: double.infinity,fit:BoxFit.fill ,)
+            :
+        Image.asset('assets/images/default_bg.png',width: double.infinity,height: double.infinity,fit:BoxFit.fill ,),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
-              'Islami', // Display the sura name in the AppBar title
+              AppLocalizations.of(context)!.app_title, // Display the sura name in the AppBar title
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
           body:content.isEmpty ?
               Center(child: CircularProgressIndicator(
-                color: my_theme.primaryColor_light,
+                  color: provider.isDark()? my_theme.yellowColor : my_theme.primaryColor_light
               ))
           :
           Container(
@@ -46,17 +48,19 @@ class _sura_detailsState extends State<sura_details> {
               horizontal: MediaQuery.of(context).size.height * 0.04,
             ),
             decoration: BoxDecoration(
-              color: Color.fromRGBO(255, 255, 255, .8),
+            color: provider.isDark()? my_theme.primaryColor_dark: Colors.white.withOpacity(0.8),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Column(
               children: [
-                Text(' سوره ${args.name}',
-                  style: Theme.of(context).textTheme.titleLarge,),
+                Text('${args.name}',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: provider.isDark()? my_theme.yellowColor : my_theme.blackColor
+                  ),),
                 Divider(
                   height: 1,
                   thickness: 1,
-                  color: my_theme.primaryColor_light,
+                    color: provider.isDark()? my_theme.yellowColor : my_theme.primaryColor_light
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height*0.04,
@@ -68,7 +72,7 @@ class _sura_detailsState extends State<sura_details> {
                       return Text(
                         '${content[index]} ${{index+1}}',
                         textDirection: TextDirection.rtl,
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 18.0, color: provider.isDark()? my_theme.yellowColor : my_theme.blackColor),
                       );
                     },
                   ),
