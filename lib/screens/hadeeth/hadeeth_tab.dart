@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami/my_theme.dart';
 import 'package:islami/screens/hadeeth/hadeth_name.dart';
+import 'package:provider/provider.dart';
+import '../../provider/app_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class hadeeth_tab extends StatefulWidget {
   @override
   State<hadeeth_tab> createState() => _hadeeth_tabState();
@@ -11,6 +14,7 @@ class _hadeeth_tabState extends State<hadeeth_tab> {
   List <Hadeth_data> hadeth_list=[];
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<app_provider>(context);
    if (hadeth_list.isEmpty){
      loadFile();
    }
@@ -19,16 +23,16 @@ class _hadeeth_tabState extends State<hadeeth_tab> {
         Center(child: Image.asset('assets/images/hadeth_logo.png')),
         Divider(
           thickness: 3,
-          color: my_theme.primaryColor_light,
+            color: provider.isDark()? my_theme.yellowColor : my_theme.primaryColor_light
         ),
-        Text('Hadeth',style: Theme.of(context).textTheme.titleMedium,),
+        Text(AppLocalizations.of(context)!.hadeth,style: Theme.of(context).textTheme.titleMedium,),
         Divider(
           thickness: 3,
-          color: my_theme.primaryColor_light,
+            color: provider.isDark()? my_theme.yellowColor : my_theme.primaryColor_light
         ),
         hadeth_list.isEmpty?
             CircularProgressIndicator(
-              color: my_theme.primaryColor_light,
+                color: provider.isDark()? my_theme.yellowColor : my_theme.primaryColor_light
             )
             :
         Expanded(

@@ -5,6 +5,10 @@ import 'package:islami/screens/quran/quran_tab.dart';
 import 'package:islami/screens/radio/radio_tab.dart';
 import 'package:islami/screens/sebha/sebha_tab.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:islami/screens/settings/settings.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/app_provider.dart';
 class home extends StatefulWidget {
   static const String routeName='home';
 
@@ -16,22 +20,26 @@ class _homeState extends State<home> {
   int selectedIndex=0;
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<app_provider>(context);
     var x=AppLocalizations.of(context);
     print(x);
     return Stack(
       children: [
-        Image.asset('assets/images/default_bg.png',width: double.infinity,height: double.infinity,fit:BoxFit.fill ,),
+        provider.isDark()?
+        Image.asset('assets/images/dark_bg.png',width: double.infinity,height: double.infinity,fit:BoxFit.fill ,)
+        :
+    Image.asset('assets/images/default_bg.png',width: double.infinity,height: double.infinity,fit:BoxFit.fill ,),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text('Islami'
-              ,
+            title: Text(AppLocalizations.of(context)!.app_title,
+
               style:Theme.of(context).textTheme.titleLarge ,
             ),
           ),
           bottomNavigationBar:Theme(
             data: Theme.of(context).copyWith(
-    canvasColor: my_theme.primaryColor_light
+    canvasColor: provider.isDark()? my_theme.primaryColor_dark : my_theme.primaryColor_light
     ),
             child: BottomNavigationBar(
               currentIndex: selectedIndex,
@@ -44,17 +52,21 @@ class _homeState extends State<home> {
               //backgroundColor: Theme.of(context).primaryColor,
               items: [
                 BottomNavigationBarItem(icon: ImageIcon(AssetImage('assets/images/icon_quran.png')),
-                    label:' AppLocalizations.of(context)!.quran',
+                    label:AppLocalizations.of(context)!.quran,
                 ),
                 BottomNavigationBarItem(icon: ImageIcon(AssetImage('assets/images/icon_hadeth.png')),
-                    label: 'AppLocalizations.of(context)!.hadeth',
+                    label: AppLocalizations.of(context)!.hadeth,
                 ),
                 BottomNavigationBarItem(icon: ImageIcon(AssetImage('assets/images/icon_sebha.png')),
-                    label: 'AppLocalizations.of(context)!.sebha',
+                    label: AppLocalizations.of(context)!.sebha,
                 ),
                 BottomNavigationBarItem(icon: ImageIcon(AssetImage('assets/images/icon_radio.png')),
-                    label: 'AppLocalizations.of(context)!.radio',
+                    label: AppLocalizations.of(context)!.radio,
                 ),
+                BottomNavigationBarItem(icon: Icon(Icons.settings),
+                  label: AppLocalizations.of(context)!.settings,
+                ),
+
               ],
             ),
           ),
@@ -69,5 +81,6 @@ class _homeState extends State<home> {
     hadeeth_tab(),
     sebha_tab(),
     radio_tab(),
+    settings(),
   ];
 }
