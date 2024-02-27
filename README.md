@@ -1,16 +1,10 @@
 # islami
+I have developed a Flutter project that consists of multiple pages.
+-The first page is the Quran page, which lists all sura names. When we click on a specific sura, it navigates to another page that contains the sura we selected. 
+-The second page is the Hadith page which includes a list of 50 hadiths. When we click on a specific hadith, it navigates to another page that displays the hadith we selected.
+-The third page, is a Sebha page. When we click on the text, it counts 33 for each zikr and then changes to another one."
+-The fourth page is a Radio and it  is only about the user interface (UI) and we will proceed as planned.
+-Finally settings page is where we can change the Language and theme
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- On the Quran and Hadith page, users can access selected suras and hadiths from a file.
+- Localizations and theming have been implemented using Provider.
